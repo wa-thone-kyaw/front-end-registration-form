@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Imageupload } from "./Imageupload";
 import { Link } from "react-router-dom";
 import { Date } from "./Date";
@@ -28,28 +28,15 @@ export const Fifthyear = () => {
   const [student_no, setStudentNo] = useState("");
   const [phone_no, setPhoneNo] = useState("");
   const [email, setEmail] = useState("");
-  const [photo, setPhoto] = useState(null);
-  const [photoPreview, setPhotoPreview] = useState(null);
+  const inputRef = useRef(null);
+  const [photo, setImage] = useState("");
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setPhoto(selectedFile);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPhotoPreview(reader.result);
-    };
-    if (selectedFile) {
-      reader.readAsDataURL(selectedFile);
-    } else {
-      setPhotoPreview(null);
-    }
-
-    /* const fileInput = e.target;
-    if (fileInput.files.length > 0) {
-      fileInput.labels[0].innerText = fileInput.files[0].name;
-    } */
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    setImage(file);
   };
+
   const handleMyanNameChange = (e) => {
     setMyanname(e.target.value);
   };
@@ -167,49 +154,85 @@ export const Fifthyear = () => {
     setStudentNo("");
     setPhoneNo("");
     setEmail("");
-    setPhoto(null);
-    setPhotoPreview(null);
 
     alert(
       "You registered successfully! Then click Next button and read the university rules. "
     );
     Axios.post(
-      "http://127.0.0.1:8000/student_registration/final_year",
+      "http://127.0.0.1:8000/student_registration/match_burmese_data",
       formData
       /*
        */
       /* { headers: { "Content-Type": "application/x-www-form-urlencoded" } } */
     )
       .then((response) => {
+        const newItemId = response.data.id;
+        alert(
+          `You registered successfully! Then click Next button and read the university rules and fill this ID ${newItemId} in the Fill ID form.`
+        );
         console.log("Data sent successfully:", response.data);
       })
       .catch((error) => {
         console.error("Error sending data:", error);
       });
   };
+
   return (
-    <div class="background">
-      <div class="uploadphoto">
-        <Imageupload />
-      </div>
-      <div class="header">
-        <h2>ပြည်ထောင်စုသမ္မတမြန်မာနိုင်ငံတော်</h2>
-        <h2>သိပ္ပံနှင့်နည်းပညာဦးစီးဌာန</h2>
-        <h2>အဆင့်မြင့်သိပ္ပံနှင့်နည်းပညာဦးစီးဌာန</h2>
-        <h2>နည်းပညာတက္ကသိုလ်(မိတ္ထီလာ)မြို့</h2>
-        <p>
-          ရက်စွဲ <Currentdate />
-        </p>
-        <h2>ကျောင်းသားမှတ်ပုံတင်အခြေပြုပုံစံ</h2>
-      </div>
-      <div className=" register-container">
-        <form onSubmit={(e) => submit(e)}>
+    <form onSubmit={handleSubmit}>
+      <div class="background">
+        <div class="uploadphoto">
+          <div className="image-upload-container">
+            <div className="box-decoration">
+              <div
+                onClick={() => inputRef.current.click()}
+                style={{ cursor: "pointer" }}
+              >
+                {photo ? (
+                  <img
+                    src={URL.createObjectURL(photo)}
+                    class="rounded"
+                    width="160"
+                    height="160"
+                  />
+                ) : (
+                  <img
+                    src={"./upload.jpg"}
+                    alt=""
+                    class="rounded"
+                    width="160"
+                    height="160"
+                  />
+                )}
+
+                <input
+                  type="file"
+                  ref={inputRef}
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                  id="img"
+                  accept="image/*"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="header">
+          <h2>ပြည်ထောင်စုသမ္မတမြန်မာနိုင်ငံတော်</h2>
+          <h2>သိပ္ပံနှင့်နည်းပညာဦးစီးဌာန</h2>
+          <h2>အဆင့်မြင့်သိပ္ပံနှင့်နည်းပညာဦးစီးဌာန</h2>
+          <h2>နည်းပညာတက္ကသိုလ်(မိတ္ထီလာ)မြို့</h2>
+          <p>
+            ရက်စွဲ <Currentdate />
+          </p>
+          <h2>ကျောင်းသားမှတ်ပုံတင်အခြေပြုပုံစံ</h2>
+        </div>
+        <div className=" register-container">
           <div className="form-group">
             <label htmlfor="myanname">ကျောင်းသား/သူအမည်(မြန်မာလို)</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleMyanNameChange}
               id="myanname"
-              value={data.myanname}
+              value={myanname}
               type="text"
               name="myanname"
               required
@@ -219,9 +242,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="engname">ကျောင်းသား/သူအမည်(အင်္ဂလိပ်လို)</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleEngNameChange}
               id="engname"
-              value={data.engname}
+              value={engname}
               type="text"
               name="engname"
               required
@@ -231,9 +254,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="nrc">နိုင်ငံသားစီစစ်‌ရေးအမှတ်</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleNrcChange}
               id="nrc"
-              value={data.nrc}
+              value={nrc}
               type="text"
               name="nrc"
               required
@@ -242,15 +265,21 @@ export const Fifthyear = () => {
 
           <div className="form-group">
             <label>မွေးသက္ကရာဇ်</label>
-            <Date />
+            <input
+              type="date"
+              name="birthDay"
+              value={birthDay}
+              onChange={handleBirthDayChange}
+              id="birthDay"
+            />
           </div>
 
           <div className="form-group">
             <label htmlfor="nation">လူမျိုး/ကိုးကွယ်သည့်ဘာသာ</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleNationChange}
               id="nation"
-              value={data.nation}
+              value={nation}
               type="text"
               name="nation"
               required
@@ -260,9 +289,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="seatno">၁၀ တန်းအောင်မြင်သည့်ခုံအမှတ်/ခုနစ်</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleSeatNoChange}
               id="seatno"
-              value={data.seatno}
+              value={seatno}
               type="text"
               name="seatno"
               required
@@ -272,9 +301,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="score">၁၀ တန်းအမှတ်ပေါင်း</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleScoreChange}
               id="score"
-              value={data.score}
+              value={score}
               type="text"
               name="score"
               required
@@ -286,9 +315,9 @@ export const Fifthyear = () => {
               (အောင်မြင်ခဲ့သည့်အတန်း-ခုံအမှတ်)
             </label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handlePassedSeatNoChange}
               id="passedseat_no"
-              value={data.passedseat_no}
+              value={passedseat_no}
               type="text"
               name="passedseat_no"
               required
@@ -298,21 +327,20 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="currentseat_no">(ယခုသင်တန်း-ခုံအမှတ်)</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleCurrentSeatNoChange}
               id="currentseat_no"
-              value={data.currentseat_no}
+              value={currentseat_no}
               type="text"
               name="currentseat_no"
               required
             />
           </div>
-
           <div className="form-group">
             <label htmlfor="myanfathername">အဘအမည်(မြန်မာလို)</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleMyFatherNameChange}
               id="myanfathername"
-              value={data.myanfathername}
+              value={myanfathername}
               type="text"
               name="myanfathername"
               required
@@ -322,9 +350,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="engfathername ">အဘအမည်(အင်္ဂလိပ်လို)</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleEngFatherNameChange}
               id="engfathername"
-              value={data.engfathername}
+              value={engfathername}
               type="text"
               name="engfathername"
               required
@@ -334,9 +362,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="fathernrc">အဘ၏နိုင်ငံသားစီစစ်ရေးအမှတ်</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleFatherNrcChange}
               id="fathernrc"
-              value={data.fathernrc}
+              value={fathernrc}
               type="text"
               name="fathernrc"
               required
@@ -346,9 +374,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="fathernation">လူမျိုး/ကိုးကွယ်သည့်ဘာသာ</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleFatherNationChange}
               id="fathernation"
-              value={data.fathernation}
+              value={fathernation}
               type="text"
               name="fathernation"
               required
@@ -358,9 +386,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="fatherjob">အဘ၏အလုပ်အကိုင်</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleFatherJobChange}
               id="fatherjob"
-              value={data.fatherjob}
+              value={fatherjob}
               type="text"
               name="fatherjob"
               required
@@ -370,9 +398,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="mothername">အမိအမည်</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleMotherNameChange}
               id="mothername"
-              value={data.mothername}
+              value={mothername}
               type="text"
               name="mothername"
               required
@@ -382,9 +410,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="mothernrc">အမိ၏နိုင်ငံသားစီစစ်ရေးအမှတ်</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleMotherNrcChange}
               id="mothernrc"
-              value={data.mothernrc}
+              value={mothernrc}
               type="text"
               name="mothernrc"
               required
@@ -394,9 +422,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="mothernation">လူမျိုး/ကိုးကွယ်သည့်ဘာသာ</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleMotherNationChange}
               id="mothernation"
-              value={data.mothernation}
+              value={mothernation}
               type="text"
               name="mothernation"
               required
@@ -406,9 +434,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="motherjob">အမိ၏အလုပ်အကိုင်</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleMotherJobChange}
               id="motherjob"
-              value={data.motherjob}
+              value={motherjob}
               type="text"
               name="motherjob"
               required
@@ -420,9 +448,9 @@ export const Fifthyear = () => {
               မိဘနေရပ်လိပ်စာအပြည့်အစုံ/ဖုန်းနံပါတ်
             </label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleAddressChange}
               id="address"
-              value={data.address}
+              value={address}
               type="text"
               name="address"
               required
@@ -434,9 +462,9 @@ export const Fifthyear = () => {
               လွယ်ကူစွာဆက်သွယ်နိုင်သည့်လိပ်စာ/ဖုန်းနံပါတ်
             </label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handlePhoneNoChange}
               id="phone_no"
-              value={data.phone_no}
+              value={phone_no}
               type="text"
               name="phone_no"
               required
@@ -448,9 +476,9 @@ export const Fifthyear = () => {
               ကျောင်းသား/သူကျောင်း၀င်မှတ်ပုံတင်အမှတ်
             </label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleStudentNoChange}
               id="student_no"
-              value={data.student_no}
+              value={student_no}
               type="text"
               name="student_no"
               required
@@ -460,9 +488,9 @@ export const Fifthyear = () => {
           <div className="form-group">
             <label htmlfor="email">Email</label>
             <input
-              onChange={(e) => handle(e)}
+              onChange={handleEmailChange}
               id="email"
-              value={data.email}
+              value={email}
               type="text"
               name="email"
               required
@@ -488,9 +516,9 @@ export const Fifthyear = () => {
               <button>Next</button>
             </Link>{" "}
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
   );
 };
 export default Fifthyear;

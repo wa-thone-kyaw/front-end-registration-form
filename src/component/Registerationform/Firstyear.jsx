@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Imageupload } from "./Imageupload";
 
 import { Link } from "react-router-dom";
@@ -27,7 +27,6 @@ export const Firstyear = () => {
   const [address, setAddress] = useState("");
   const [phone_no, setPhoneNo] = useState("");
   const [email, setEmail] = useState("");
-  const [photo, setPhoto] = useState(null);
 
   const handleMyanNameChange = (e) => {
     setMyanname(e.target.value);
@@ -41,6 +40,9 @@ export const Firstyear = () => {
 
   const handleNationChange = (e) => {
     setNation(e.target.value);
+  };
+  const handleBirthDayChange = (e) => {
+    setBirthDay(e.target.value);
   };
   const handleSeatNoChange = (e) => {
     setSeatNo(e.target.value);
@@ -88,79 +90,46 @@ export const Firstyear = () => {
     setEmail(e.target.value);
   };
 
-  /* const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const formData = new URLSearchParams();
-    formData.append("myanname", myanname);
-    formData.append("engname", engname);
-    formData.append("nrc", nrc);
-    formData.append("birthDay", birthDay);
-    formData.append("nation", nation);
-    formData.append("seatno", seatno);
-    formData.append("score", score);
-    formData.append("department", department);
-    formData.append("myanfathername", myanfathername);
-    formData.append("engfathername", engfathername);
-    formData.append("fathernrc", fathernrc);
-    formData.append("fathernation", fathernation);
-    formData.append("fatherjob", fatherjob);
-    formData.append("mothername", mothername);
-    formData.append("mothernrc", mothernrc);
-    formData.append("mothernation", mothernation);
-    formData.append("motherjob", motherjob);
-    formData.append("address", address);
-    formData.append("phone_no", phone_no);
-    formData.append("email", email);
-    formData.append("photo", photo);
-
-    setMyanname("");
-    setEngname("");
-    setNrc("");
-    setBirthDay("");
-    setNation("");
-    setSeatNo("");
-    setScore("");
-    setDepartment();
-    setMyanFatherName("");
-    setEngFatherName("");
-    setFatherNrc("");
-    setFatherNation("");
-    setFatherJob("");
-    setMotherName("");
-    setMotherNrc("");
-    setMotherNation("");
-    setMotherJob("");
-    setAddress("");
-    setPhoneNo("");
-    setEmail("");
-    setPhoto(null);
-
-    alert(
-      "You registered successfully! Then click Next button and read the university rules. "
-    );
-    Axios.post(
-      "http://127.0.0.1:8000/student_registration/first_year",
-      formData
-    )
-      /*
-       */
-  /* { headers: { "Content-Type": "application/x-www-form-urlencoded" } } */
-
-  /* .then((response) => {
-        console.log("Data sent successfully:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error sending data:", error);
-      });
-  }; */
-
   return (
     <form>
       <div class="background">
         <div class="uploadphoto">
-          <Imageupload />
+          {/* <div className="image-upload-container">
+            <div className="box-decoration">
+              <div
+                onClick={() => inputRef.current.click()}
+                style={{ cursor: "pointer" }}
+              >
+                {photo ? (
+                  <img
+                    src={URL.createObjectURL(photo)}
+                    class="rounded"
+                    width="160"
+                    height="160"
+                  />
+                ) : (
+                  <img
+                    src={"./upload.jpg"}
+                    alt=""
+                    class="rounded"
+                    width="160"
+                    height="160"
+                  />
+                )}
+
+                <input
+                  type="file"
+                  ref={inputRef}
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                  id="img"
+                  accept="image/*"
+                />
+              </div>
+            </div>
+          </div> */}
         </div>
+
         <div class="header">
           <h2>ပြည်ထောင်စုသမ္မတမြန်မာနိုင်ငံတော်</h2>
           <h2>သိပ္ပံနှင့်နည်းပညာဦးစီးဌာန</h2>
@@ -210,7 +179,13 @@ export const Firstyear = () => {
 
           <div className="form-group">
             <label>မွေးသက္ကရာဇ်</label>
-            <Date />
+            <input
+              type="date"
+              name="birthDay"
+              value={birthDay}
+              onChange={handleBirthDayChange}
+              id="birthDay"
+            />
           </div>
 
           <div className="form-group">
@@ -422,7 +397,33 @@ export const Firstyear = () => {
           </div>
 
           <div className="next">
-            <Link to="/choosemajor">
+            <Link
+              to={{
+                pathname: "/choosemajor",
+                state: {
+                  myanname,
+                  engname,
+                  nrc,
+                  birthDay,
+                  nation,
+                  seatno,
+                  score,
+                  department,
+                  myanfathername,
+                  engfathername,
+                  fathernrc,
+                  fathernation,
+                  fatherjob,
+                  mothername,
+                  mothernrc,
+                  mothernation,
+                  motherjob,
+                  address,
+                  phone_no,
+                  email,
+                },
+              }}
+            >
               <button>Next</button>
             </Link>
           </div>

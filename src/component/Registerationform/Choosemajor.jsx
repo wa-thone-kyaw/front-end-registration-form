@@ -1,31 +1,60 @@
 import List from "./List";
 import React, { useState } from "react";
 import { Selectbox } from "./Selectbox";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Choosemajor.css";
 import Axios from "axios";
+
 export const Choosemajor = () => {
-  const [myanname, setMyanname] = useState("");
-  const [engname, setEngname] = useState("");
-  const [nrc, setNrc] = useState("");
-  const [birthDay, setBirthDay] = useState("");
-  const [nation, setNation] = useState("");
-  const [seatno, setSeatNo] = useState("");
-  const [score, setScore] = useState("");
-  const [department, setDepartment] = useState("");
-  const [myanfathername, setMyanFatherName] = useState("");
-  const [engfathername, setEngFatherName] = useState("");
-  const [fathernrc, setFatherNrc] = useState("");
-  const [fathernation, setFatherNation] = useState("");
-  const [fatherjob, setFatherJob] = useState("");
-  const [mothername, setMotherName] = useState("");
-  const [mothernrc, setMotherNrc] = useState("");
-  const [mothernation, setMotherNation] = useState("");
-  const [motherjob, setMotherJob] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone_no, setPhoneNo] = useState("");
-  const [email, setEmail] = useState("");
-  const [photo, setPhoto] = useState(null);
+  const location = useLocation();
+  const {
+    myanname: initialMyanname,
+    engname: initialEngname,
+    nrc: initialNrc,
+    birthDay: initialBirthday,
+    nation: initialNation,
+    seatno: initialSeatNo,
+    score: initialScore,
+    department: initialDepartment,
+    myanfathername: initialMyanFatherName,
+    engfathername: initialEngFatherName,
+    fathernrc: initialFatherNrc,
+    fathernation: initialFatherNation,
+    fatherjob: initialFatherJob,
+    mothername: initialMotherName,
+    mothernrc: initialMotherNrc,
+    mothernation: initialMotherNation,
+    motherjob: initialMotherJob,
+    address: initialAddress,
+    phone_no: initialPhoneNo,
+    email: initialEmail,
+  } = location.state || {};
+
+  const [myanname, setMyanname] = useState(initialMyanname || "");
+  const [engname, setEngname] = useState(initialEngname || "");
+  const [nrc, setNrc] = useState(initialNrc || "");
+  const [birthDay, setBirthDay] = useState(initialBirthday || "");
+  const [nation, setNation] = useState(initialNation || "");
+  const [seatno, setSeatNo] = useState(initialSeatNo || "");
+  const [score, setScore] = useState(initialScore || "");
+  const [department, setDepartment] = useState(initialDepartment || "");
+  const [myanfathername, setMyanFatherName] = useState(
+    initialMyanFatherName || ""
+  );
+  const [engfathername, setEngFatherName] = useState(
+    initialEngFatherName || ""
+  );
+  const [fathernrc, setFatherNrc] = useState(initialFatherNrc || "");
+  const [fathernation, setFatherNation] = useState(initialFatherNation || "");
+  const [fatherjob, setFatherJob] = useState(initialFatherJob || "");
+  const [mothername, setMotherName] = useState(initialMotherName || "");
+  const [mothernrc, setMotherNrc] = useState(initialMotherNrc || "");
+  const [mothernation, setMotherNation] = useState(initialMotherNation || "");
+  const [motherjob, setMotherJob] = useState(initialMotherJob || "");
+  const [address, setAddress] = useState(initialAddress || "");
+  const [phone_no, setPhoneNo] = useState(initialPhoneNo || "");
+  const [email, setEmail] = useState(initialEmail || "");
+
   const [selectedValue, setSelectedValue] = useState("");
   const [selectedValue2, setSelectedValue2] = useState("");
   const [selectedValue3, setSelectedValue3] = useState("");
@@ -62,7 +91,7 @@ export const Choosemajor = () => {
     console.log("Selected major:", event.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new URLSearchParams();
@@ -86,7 +115,6 @@ export const Choosemajor = () => {
     formData.append("address", address);
     formData.append("phone_no", phone_no);
     formData.append("email", email);
-    formData.append("photo", photo);
     formData.append("selectedValue", selectedValue);
     formData.append("selectedValue2", selectedValue2);
     formData.append("selectedValue3", selectedValue3);
@@ -118,131 +146,108 @@ export const Choosemajor = () => {
     /* alert(
       "You registered successfully! Then click Next button and read the university rules. "
     ); */
-    Axios.post(
-      "http://127.0.0.1:8000/student_registration/first_year",
-      formData
-    )
-      /*
-       */
-      /* { headers: { "Content-Type": "application/x-www-form-urlencoded" } } */
-
-      .then((response) => {
-        const newItemId = response.data.id;
-        alert(
-          `You registered successfully! Then click Next button and read the university rules and fill this ID ${newItemId} in the Fill ID form.`
-        );
-        console.log("Data sent successfully:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error sending data:", error);
-      });
+    try {
+      const response = await Axios.post(
+        "http://127.0.0.1:8000/student_registration/first_year",
+        formData
+      );
+      const newItemId = response.data.id;
+      alert(
+        `You registered successfully! Then click Next button and read the university rules and fill this ID ${newItemId} in the Fill ID form.`
+      );
+      console.log("Data sent successfully:", response.data);
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
   };
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <br />
-        <h2>ဖွင့်လှစ်မည့်သင်တန်းများ</h2>
-        <br />
+    <form onSubmit={handleSubmit}>
+      <br />
+      <h2>ဖွင့်လှစ်မည့်သင်တန်းများ</h2>
+      <br />
 
-        <div class="courses">
-          <div>
-            <ol>
-              <li>Civil(မြို့ပြသင်တန်း)</li>
-              <li>Electronics(အီလက်ထရောနစ်)</li>
-              <li>Electrical Power(လျှပ်စစ်စွမ်းအား)</li>
-              <li>Mechanical(စက်မှုစွမ်းအား)</li>
-              <li>Information Technology(သုတနည်းပညာ)</li>
-            </ol>
-          </div>
-          <br />
-          <br />
-          <h2>
-            တက်‌ရောက်လိုသောသင်တန်း(ကွက်လက်အားလုံးပြည့်စုံစွာဖြည့်စွက်ပါရန်)
-          </h2>
-          <br />
-          <div>
-            <ul>
-              <li>
-                ပထမဦးစားပေး{" "}
-                <select value={selectedValue} onChange={onOptionChangeHandler1}>
-                  {options.map((option, index) => {
-                    return <option key={index}>{option}</option>;
-                  })}
-                </select>
-              </li>
-              <br />
-              <li>
-                ဒုတိယဦးစားပေး{" "}
-                <select
-                  value={selectedValue2}
-                  onChange={onOptionChangeHandler2}
-                >
-                  {options.map((option, index) => {
-                    return <option key={index}>{option}</option>;
-                  })}
-                </select>
-              </li>
-              <br />
-              <li>
-                တတိယဦးစားပေး{" "}
-                <select
-                  value={selectedValue3}
-                  onChange={onOptionChangeHandler3}
-                >
-                  {options.map((option, index) => {
-                    return <option key={index}>{option}</option>;
-                  })}
-                </select>
-              </li>
-              <br />
-              <li>
-                စတုတ္ထဦးစားပေး{" "}
-                <select
-                  value={selectedValue4}
-                  onChange={onOptionChangeHandler4}
-                >
-                  {options.map((option, index) => {
-                    return <option key={index}>{option}</option>;
-                  })}
-                </select>
-              </li>
-              <br />
-              <li>
-                ပဥ္စမဦးစားပေး{" "}
-                <select
-                  value={selectedValue5}
-                  onChange={onOptionChangeHandler5}
-                >
-                  {options.map((option, index) => {
-                    return <option key={index}>{option}</option>;
-                  })}
-                </select>
-              </li>
-            </ul>
-          </div>
+      <div class="courses">
+        <div>
+          <ol>
+            <li>Civil(မြို့ပြသင်တန်း)</li>
+            <li>Electronics(အီလက်ထရောနစ်)</li>
+            <li>Electrical Power(လျှပ်စစ်စွမ်းအား)</li>
+            <li>Mechanical(စက်မှုစွမ်းအား)</li>
+            <li>Information Technology(သုတနည်းပညာ)</li>
+          </ol>
         </div>
         <br />
-        <div className=" back">
-          {" "}
-          <Link to="/firstyear">
-            <button>Back</button>
-          </Link>
+        <br />
+        <h2>တက်‌ရောက်လိုသောသင်တန်း(ကွက်လက်အားလုံးပြည့်စုံစွာဖြည့်စွက်ပါရန်)</h2>
+        <br />
+        <div>
+          <ul>
+            <li>
+              ပထမဦးစားပေး{" "}
+              <select value={selectedValue} onChange={onOptionChangeHandler1}>
+                {options.map((option, index) => {
+                  return <option key={index}>{option}</option>;
+                })}
+              </select>
+            </li>
+            <br />
+            <li>
+              ဒုတိယဦးစားပေး{" "}
+              <select value={selectedValue2} onChange={onOptionChangeHandler2}>
+                {options.map((option, index) => {
+                  return <option key={index}>{option}</option>;
+                })}
+              </select>
+            </li>
+            <br />
+            <li>
+              တတိယဦးစားပေး{" "}
+              <select value={selectedValue3} onChange={onOptionChangeHandler3}>
+                {options.map((option, index) => {
+                  return <option key={index}>{option}</option>;
+                })}
+              </select>
+            </li>
+            <br />
+            <li>
+              စတုတ္ထဦးစားပေး{" "}
+              <select value={selectedValue4} onChange={onOptionChangeHandler4}>
+                {options.map((option, index) => {
+                  return <option key={index}>{option}</option>;
+                })}
+              </select>
+            </li>
+            <br />
+            <li>
+              ပဥ္စမဦးစားပေး{" "}
+              <select value={selectedValue5} onChange={onOptionChangeHandler5}>
+                {options.map((option, index) => {
+                  return <option key={index}>{option}</option>;
+                })}
+              </select>
+            </li>
+          </ul>
         </div>
+      </div>
+      <br />
+      <div className="back">
+        {" "}
+        <Link to="/firstyear">
+          <button>Back</button>
+        </Link>
+      </div>
 
-        <div className="submit">
-          <button type="submit" name="submit" onSubmit={handleSubmit}>
-            Submit
-          </button>
-        </div>
+      <div className="submit">
+        <button type="submit">Submit</button>
+      </div>
 
-        <div class="next">
-          {" "}
-          <Link to="/agreeform">
-            <button>Next</button>
-          </Link>{" "}
-        </div>
-      </form>
-    </>
+      <div class="next">
+        {" "}
+        <Link to="/agreeform">
+          <button>Next</button>
+        </Link>{" "}
+      </div>
+    </form>
   );
 };
 export default Choosemajor;

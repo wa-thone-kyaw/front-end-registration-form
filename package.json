@@ -28,7 +28,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.7.3",
     "styled-components": "^6.0.4",
-    "useref": "^1.4.4",
+    "useRef": "^1.4.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+
 import { Imageupload } from "./Imageupload";
 import { Link } from "react-router-dom";
 import { Currentdate } from "./Currentdate";
@@ -27,7 +28,14 @@ export const Secondyear = () => {
   const [student_no, setStudentNo] = useState("");
   const [phone_no, setPhoneNo] = useState("");
   const [email, setEmail] = useState("");
-  const [photo, setPhoto] = useState(null);
+  const inputRef = useRef(null);
+  const [photo, setImage] = useState("");
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    setImage(file);
+  };
 
   const handleMyanNameChange = (e) => {
     setMyanname(e.target.value);
@@ -99,7 +107,7 @@ export const Secondyear = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new URLSearchParams();
+    const formData = new FormData();
     formData.append("myanname", myanname);
     formData.append("engname", engname);
     formData.append("nrc", nrc);
@@ -146,19 +154,23 @@ export const Secondyear = () => {
     setStudentNo("");
     setPhoneNo("");
     setEmail("");
-    setPhoto(null);
+    setImage("");
 
     alert(
       "You registered successfully! Then click Next button and read the university rules. "
     );
     Axios.post(
-      "http://127.0.0.1:8000/student_registration/third_year",
+      "http://127.0.0.1:8000/student_registration/match_burmese_data",
       formData
       /*
        */
       /* { headers: { "Content-Type": "application/x-www-form-urlencoded" } } */
     )
       .then((response) => {
+        const newItemId = response.data.id;
+        alert(
+          `You registered successfully! Then click Next button and read the university rules and fill this ID ${newItemId} in the Fill ID form.`
+        );
         console.log("Data sent successfully:", response.data);
       })
       .catch((error) => {
@@ -169,7 +181,40 @@ export const Secondyear = () => {
     <form onSubmit={handleSubmit}>
       <div class="background">
         <div class="uploadphoto">
-          <Imageupload />
+          <div className="image-upload-container">
+            <div className="box-decoration">
+              <div
+                onClick={() => inputRef.current.click()}
+                style={{ cursor: "pointer" }}
+              >
+                {photo ? (
+                  <img
+                    src={URL.createObjectURL(photo)}
+                    class="rounded"
+                    width="160"
+                    height="160"
+                  />
+                ) : (
+                  <img
+                    src={"./upload.jpg"}
+                    alt=""
+                    class="rounded"
+                    width="160"
+                    height="160"
+                  />
+                )}
+
+                <input
+                  type="file"
+                  ref={inputRef}
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                  id="img"
+                  accept="image/*"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div class="header">
           <h2>ပြည်ထောင်စုသမ္မတမြန်မာနိုင်ငံတော်</h2>
@@ -190,7 +235,7 @@ export const Secondyear = () => {
               value={myanname}
               type="text"
               name="myanname"
-              required
+              //required
             />
           </div>
 
@@ -202,7 +247,7 @@ export const Secondyear = () => {
               value={engname}
               type="text"
               name="engname"
-              required
+              //required
             />
           </div>
 
@@ -214,7 +259,7 @@ export const Secondyear = () => {
               value={nrc}
               type="text"
               name="nrc"
-              required
+              //required
             />
           </div>
 
@@ -237,7 +282,7 @@ export const Secondyear = () => {
               value={nation}
               type="text"
               name="nation"
-              required
+              //required
             />
           </div>
 
@@ -249,7 +294,7 @@ export const Secondyear = () => {
               value={seatno}
               type="text"
               name="seatno"
-              required
+              //required
             />
           </div>
 
@@ -261,7 +306,7 @@ export const Secondyear = () => {
               value={score}
               type="text"
               name="score"
-              required
+              //required
             />
           </div>
 
@@ -275,7 +320,7 @@ export const Secondyear = () => {
               value={passedseat_no}
               type="text"
               name="passedseat_no"
-              required
+              //required
             />
           </div>
 
@@ -287,7 +332,7 @@ export const Secondyear = () => {
               value={currentseat_no}
               type="text"
               name="currentseat_no"
-              required
+              // required
             />
           </div>
 
@@ -299,7 +344,7 @@ export const Secondyear = () => {
               value={myanfathername}
               type="text"
               name="myanfathername"
-              required
+              //required
             />
           </div>
 
@@ -311,7 +356,7 @@ export const Secondyear = () => {
               value={engfathername}
               type="text"
               name="engfathername"
-              required
+              //required
             />
           </div>
 
@@ -323,7 +368,7 @@ export const Secondyear = () => {
               value={fathernrc}
               type="text"
               name="fathernrc"
-              required
+              //required
             />
           </div>
 
@@ -335,7 +380,7 @@ export const Secondyear = () => {
               value={fathernation}
               type="text"
               name="fathernation"
-              required
+              //required
             />
           </div>
 
@@ -347,7 +392,7 @@ export const Secondyear = () => {
               value={fatherjob}
               type="text"
               name="fatherjob"
-              required
+              //required
             />
           </div>
 
@@ -359,7 +404,7 @@ export const Secondyear = () => {
               value={mothername}
               type="text"
               name="mothername"
-              required
+              //required
             />
           </div>
 
@@ -371,7 +416,7 @@ export const Secondyear = () => {
               value={mothernrc}
               type="text"
               name="mothernrc"
-              required
+              //required
             />
           </div>
 
@@ -383,7 +428,7 @@ export const Secondyear = () => {
               value={mothernation}
               type="text"
               name="mothernation"
-              required
+              //required
             />
           </div>
 
@@ -395,7 +440,7 @@ export const Secondyear = () => {
               value={motherjob}
               type="text"
               name="motherjob"
-              required
+              //required
             />
           </div>
 
@@ -409,7 +454,7 @@ export const Secondyear = () => {
               value={address}
               type="text"
               name="address"
-              required
+              // required
             />
           </div>
 
@@ -423,7 +468,7 @@ export const Secondyear = () => {
               value={phone_no}
               type="text"
               name="phone_no"
-              required
+              //required
             />
           </div>
 
@@ -437,7 +482,7 @@ export const Secondyear = () => {
               value={student_no}
               type="text"
               name="student_no"
-              required
+              //required
             />
           </div>
 
@@ -449,7 +494,7 @@ export const Secondyear = () => {
               value={email}
               type="text"
               name="email"
-              required
+              //required
             />
           </div>
 
