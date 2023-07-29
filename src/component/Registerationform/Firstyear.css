@@ -1,0 +1,61 @@
+.register-container{
+    width: 100% !important;
+    height: auto;
+    margin-left:20px;
+     margin-top: 130px;
+}
+
+.header h2{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    line-height: 2;
+    text-align: justify;
+}
+
+
+.herder p{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+label{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+.uploadphoto{
+    max-width: 50px;
+    float:right;
+    margin-right: 150px;
+    margin-top:50px;
+}
+
+.title{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 2px;
+}
+
+h5{
+    text-align:left;
+}
+
+
+.rules{
+    margin-left:20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+.rules h3{
+    margin-left:20px;
+}
+
+.examrules{
+    margin-left:20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+.examrules h3{
+    margin-left:20px;
+}
+.submit{
+    margin:10% 45%;
+}
+.accept{
+    float:center;
+}
