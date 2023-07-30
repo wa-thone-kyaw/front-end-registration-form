@@ -1,19 +1,28 @@
 .register-container {
     width: 100% !important;
+    height: 2px;
+    margin-left: 0auto;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.background {
     height: auto;
-    margin-left: 20px;
-    margin-top: 130px;
+    width: 100%;
 }
 
 .header h2 {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    line-height: 2;
-    text-align: justify;
+    line-height: 1.5;
+    text-align: center;
+    margin-left: 35px;
 }
 
 
 .herder p {
     font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-bottom: 10px;
+    float: right;
 }
 
 label {
@@ -27,6 +36,7 @@ label {
     margin-right: 150px;
     margin-top: 50px;
 }
+
 
 .title {
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -66,12 +76,74 @@ h5 {
     float: center;
 }
 
+.courses {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+    line-height: 2;
+}
+
+.courses li {
+    margin-right: 80px;
+    text-align: left;
+}
+
+.courses h2 {
+    font-size: 24px;
+    text-align: left;
+    margin-left: 50px;
+    font-weight: bold;
+}
+
+/* Style the select element */
+.register-container select {
+    width: 20%;
+    height: 30px;
+    text-align: center;
+    font-weight: 150;
+    background: white;
+    border: none;
+    border-bottom: 1px dotted black;
+    font-size: 18px;
+    padding-left: 0;
+    margin-right: 500px;
+    /* Adjusted to center the select element */
+    /* Add a custom arrow icon using CSS */
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    /* Ensure the arrow icon remains visible even when the select is expanded */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.register-container select::after {
+    content: "▼";
+    /* Custom arrow icon (you can change it) */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+
 @media (max-width: 768px) {
-    .form {
+    .register-container {
         max-width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Set the margin to zero so that the select box appears on the left */
+        margin: 0;
     }
 
     h2 {
         font-size: 20px;
+    }
+
+    .register-container select {
+        width: 90%;
+        margin-left: 0;
     }
 }

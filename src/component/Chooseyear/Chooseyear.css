@@ -4,7 +4,7 @@
 
 /* Base styles for the .year elements */
 .year {
-  margin: 30px;
+  margin: 10px;
 }
 
 /* Apply a hover effect to all .year elements */
@@ -13,10 +13,10 @@
 }
 
 /* Media query for small screens */
-@media screen and (max-width: 768px) {
-  .year {
+@media screen and (max-width: 767px) {
+  .chooseyear {
     /* Modify margins for smaller screens */
-    margin: 15px;
+    margin-left: 100px;
   }
 }
 
