@@ -3,7 +3,7 @@ import { Contact } from "./component/NavigationBar/Contact";
 import { SignIn } from "./component/SignInSignUp/SignIn";
 import { SignUp } from "./component/SignInSignUp/SignUp";
 import { Dashboard } from "./component/Dashboard/Dashboard";
-import { admChooseyear } from "./component/Dashboard/admChooseyear";
+import { AdmChooseyears } from "./component/Dashboard/AdmChooseyears";
 import { SecondyearStudent } from "./component/Dashboard/SecondyearStudent";
 import { About } from "./component/NavigationBar/About";
 import { Home } from "./component/NavigationBar/Home";
@@ -25,13 +25,13 @@ import "./component/NavigationBar/About.css";
 import "./component/NavigationBar/Home.css";
 import "./component/AdminNavBar/AdminNavBar.css";
 import "./component/AdminNavBar/AdminHome.css";
+import "./component/Dashboard/AdmChooseyears.css";
 import "./component/Chooseyear/Chooseyear.css";
 import "./component/Registerationform/Firstyear.css";
 import "./component/Registerationform/Overfirstyear.css";
 import "./component/Registerationform/Agreeform.css";
 import "./component/Dashboard/Dashboard.css";
 import "./component/Dashboard/SecondyearStudent.css";
-import "./component/Dashboard/admChooseyear.css";
 import { AdminNavBar } from "./component/AdminNavBar/AdminNavBar";
 
 export default function MyApp() {
@@ -44,7 +44,9 @@ export default function MyApp() {
           <Route path="/admin" element={<AdminHome />} />
 
           <Route path="/contact" element={<Contact />} />
-
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/secondyearstudent" element={<SecondyearStudent />} />
+          <Route path="/admchooseyear" element={<AdmChooseyears />} />
           <Route path="/about" element={<About />} />
           <Route path="/" element={<Home />} />
           <Route path="/chooseyear" element={<Chooseyear />} />

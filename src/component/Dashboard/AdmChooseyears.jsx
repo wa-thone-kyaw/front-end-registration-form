@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import React from "react";
 //import { Sidebar } from './Sidebar';
 
-export const admChooseyear = () => {
+export const AdmChooseyears = () => {
   return (
     <>
-      <div class="chooseyear">
+      <div class="chooseyearadm">
         <h1>Choose Year</h1>
         <div class="year">
           <div class="left">
