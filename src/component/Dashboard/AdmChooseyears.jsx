@@ -22,7 +22,7 @@ export const AdmChooseyears = () => {
             </div>
 
             <div class="third">
-              <Link to="/thirdyearstudent">
+              <Link to="/thirdyearstudentcivil">
                 <button>Third Year</button>
               </Link>
             </div>
@@ -30,19 +30,19 @@ export const AdmChooseyears = () => {
 
           <div class="right">
             <div class="fourth">
-              <Link to="/fourthyear">
+              <Link to="/fourthyearstudentcivil">
                 <button>Fourth Year</button>
               </Link>
             </div>
 
             <div class="fifth">
-              <Link to="/fifthyear">
+              <Link to="/fifthyearstudentcivil">
                 <button>Fifth Year</button>
               </Link>
             </div>
 
             <div class="sixth">
-              <Link to="/sixthyear">
+              <Link to="/sixthyearstudentcivil">
                 <button>Sixth Year</button>
               </Link>
             </div>

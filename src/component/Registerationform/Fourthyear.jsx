@@ -12,7 +12,7 @@ export const Fourthyear = () => {
   const [nrc, setNrc] = useState("");
   const [birthDay, setBirthDay] = useState("");
   const [nation, setNation] = useState("");
-  const [seatno, setSeatNo] = useState("");
+  const [rollno, setRollNo] = useState("");
   const [score, setScore] = useState("");
   const [passedseat_no, setPassedSeatNo] = useState("");
   const [currentseat_no, setCurrentSeatNo] = useState("");
@@ -54,7 +54,7 @@ export const Fourthyear = () => {
     setNation(e.target.value);
   };
   const handleSeatNoChange = (e) => {
-    setSeatNo(e.target.value);
+    setRollNo(e.target.value);
   };
   const handleScoreChange = (e) => {
     setScore(e.target.value);
@@ -114,7 +114,7 @@ export const Fourthyear = () => {
     formData.append("nrc", nrc);
     formData.append("birthDay", birthDay);
     formData.append("nation", nation);
-    formData.append("seatno", seatno);
+    formData.append("rollno", rollno);
     formData.append("score", score);
     formData.append("passedseat_no", passedseat_no);
     formData.append("currentseat_no", currentseat_no);
@@ -138,7 +138,7 @@ export const Fourthyear = () => {
     setNrc("");
     setBirthDay("");
     setNation("");
-    setSeatNo("");
+    setRollNo("");
     setScore("");
     setPassedSeatNo("");
     setCurrentSeatNo("");
@@ -161,7 +161,7 @@ export const Fourthyear = () => {
     );
 
     Axios.post(
-      "http://127.0.0.1:8000/student_registration/match_burmese_data",
+      "http://127.0.0.1:8000/student_registration/matched_fourth_year",
       formData
       /*
        */
@@ -179,349 +179,351 @@ export const Fourthyear = () => {
       });
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <div class="background">
-        <Navigationbar />
-        <div class="uploadphoto">
-          <div className="image-upload-container">
-            <div className="box-decoration">
-              <div
-                onClick={() => inputRef.current.click()}
-                style={{ cursor: "pointer" }}
-              >
-                {photo ? (
-                  <img
-                    src={URL.createObjectURL(photo)}
-                    class="rounded"
-                    width="160"
-                    height="160"
-                  />
-                ) : (
-                  <img
-                    src={"./upload.jpg"}
-                    alt=""
-                    class="rounded"
-                    width="160"
-                    height="160"
-                  />
-                )}
+    <div>
+      <Navigationbar />
+      <form onSubmit={handleSubmit}>
+        <div class="background">
+          <div class="uploadphoto">
+            <div className="image-upload-container">
+              <div className="box-decoration">
+                <div
+                  onClick={() => inputRef.current.click()}
+                  style={{ cursor: "pointer" }}
+                >
+                  {photo ? (
+                    <img
+                      src={URL.createObjectURL(photo)}
+                      class="rounded"
+                      width="160"
+                      height="160"
+                    />
+                  ) : (
+                    <img
+                      src={"./upload.jpg"}
+                      alt=""
+                      class="rounded"
+                      width="160"
+                      height="160"
+                    />
+                  )}
 
-                <input
-                  type="file"
-                  ref={inputRef}
-                  onChange={handleImageChange}
-                  style={{ display: "none" }}
-                  id="img"
-                  accept="image/*"
-                />
+                  <input
+                    type="file"
+                    ref={inputRef}
+                    onChange={handleImageChange}
+                    style={{ display: "none" }}
+                    id="img"
+                    accept="image/*"
+                  />
+                </div>
               </div>
             </div>
           </div>
+          <div class="header">
+            <h2>ပြည်ထောင်စုသမ္မတမြန်မာနိုင်ငံတော်</h2>
+            <h2>သိပ္ပံနှင့်နည်းပညာဦးစီးဌာန</h2>
+            <h2>အဆင့်မြင့်သိပ္ပံနှင့်နည်းပညာဦးစီးဌာန</h2>
+            <h2>နည်းပညာတက္ကသိုလ်(မိတ္ထီလာ)မြို့</h2>
+            <p>
+              ရက်စွဲ <Currentdate />
+            </p>
+            <h2>ကျောင်းသားမှတ်ပုံတင်အခြေပြုပုံစံ</h2>
+          </div>
+          <div className=" register-container">
+            <div className="form-group">
+              <label htmlfor="myanname">ကျောင်းသား/သူအမည်(မြန်မာလို)</label>
+              <input
+                onChange={handleMyanNameChange}
+                id="myanname"
+                value={myanname}
+                type="text"
+                name="myanname"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="engname">ကျောင်းသား/သူအမည်(အင်္ဂလိပ်လို)</label>
+              <input
+                onChange={handleEngNameChange}
+                id="engname"
+                value={engname}
+                type="text"
+                name="engname"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="nrc">နိုင်ငံသားစီစစ်‌ရေးအမှတ်</label>
+              <input
+                onChange={handleNrcChange}
+                id="nrc"
+                value={nrc}
+                type="text"
+                name="nrc"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>မွေးသက္ကရာဇ်</label>
+              <input
+                type="date"
+                name="birthDay"
+                value={birthDay}
+                onChange={handleBirthDayChange}
+                id="birthDay"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="nation">လူမျိုး/ကိုးကွယ်သည့်ဘာသာ</label>
+              <input
+                onChange={handleNationChange}
+                id="nation"
+                value={nation}
+                type="text"
+                name="nation"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="rollno">၁၀ တန်းအောင်မြင်သည့်ခုံအမှတ်/ခုနစ်</label>
+              <input
+                onChange={handleSeatNoChange}
+                id="rollno"
+                value={rollno}
+                type="text"
+                name="rollno"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="score">၁၀ တန်းအမှတ်ပေါင်း</label>
+              <input
+                onChange={handleScoreChange}
+                id="score"
+                value={score}
+                type="text"
+                name="score"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="passedseat_no">
+                (အောင်မြင်ခဲ့သည့်အတန်း-ခုံအမှတ်)
+              </label>
+              <input
+                onChange={handlePassedSeatNoChange}
+                id="passedseat_no"
+                value={passedseat_no}
+                type="text"
+                name="passedseat_no"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="currentseat_no">(ယခုသင်တန်း-ခုံအမှတ်)</label>
+              <input
+                onChange={handleCurrentSeatNoChange}
+                id="currentseat_no"
+                value={currentseat_no}
+                type="text"
+                name="currentseat_no"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="myanfathername">အဘအမည်(မြန်မာလို)</label>
+              <input
+                onChange={handleMyFatherNameChange}
+                id="myanfathername"
+                value={myanfathername}
+                type="text"
+                name="myanfathername"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="engfathername ">အဘအမည်(အင်္ဂလိပ်လို)</label>
+              <input
+                onChange={handleEngFatherNameChange}
+                id="engfathername"
+                value={engfathername}
+                type="text"
+                name="engfathername"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="fathernrc">အဘ၏နိုင်ငံသားစီစစ်ရေးအမှတ်</label>
+              <input
+                onChange={handleFatherNrcChange}
+                id="fathernrc"
+                value={fathernrc}
+                type="text"
+                name="fathernrc"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="fathernation">လူမျိုး/ကိုးကွယ်သည့်ဘာသာ</label>
+              <input
+                onChange={handleFatherNationChange}
+                id="fathernation"
+                value={fathernation}
+                type="text"
+                name="fathernation"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="fatherjob">အဘ၏အလုပ်အကိုင်</label>
+              <input
+                onChange={handleFatherJobChange}
+                id="fatherjob"
+                value={fatherjob}
+                type="text"
+                name="fatherjob"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="mothername">အမိအမည်</label>
+              <input
+                onChange={handleMotherNameChange}
+                id="mothername"
+                value={mothername}
+                type="text"
+                name="mothername"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="mothernrc">အမိ၏နိုင်ငံသားစီစစ်ရေးအမှတ်</label>
+              <input
+                onChange={handleMotherNrcChange}
+                id="mothernrc"
+                value={mothernrc}
+                type="text"
+                name="mothernrc"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="mothernation">လူမျိုး/ကိုးကွယ်သည့်ဘာသာ</label>
+              <input
+                onChange={handleMotherNationChange}
+                id="mothernation"
+                value={mothernation}
+                type="text"
+                name="mothernation"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="motherjob">အမိ၏အလုပ်အကိုင်</label>
+              <input
+                onChange={handleMotherJobChange}
+                id="motherjob"
+                value={motherjob}
+                type="text"
+                name="motherjob"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="address">
+                မိဘနေရပ်လိပ်စာအပြည့်အစုံ/ဖုန်းနံပါတ်
+              </label>
+              <input
+                onChange={handleAddressChange}
+                id="address"
+                value={address}
+                type="text"
+                name="address"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="phone_no">
+                လွယ်ကူစွာဆက်သွယ်နိုင်သည့်လိပ်စာ/ဖုန်းနံပါတ်
+              </label>
+              <input
+                onChange={handlePhoneNoChange}
+                id="phone_no"
+                value={phone_no}
+                type="text"
+                name="phone_no"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="student_no">
+                ကျောင်းသား/သူကျောင်း၀င်မှတ်ပုံတင်အမှတ်
+              </label>
+              <input
+                onChange={handleStudentNoChange}
+                id="student_no"
+                value={student_no}
+                type="text"
+                name="student_no"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlfor="email">Email</label>
+              <input
+                onChange={handleEmailChange}
+                id="email"
+                value={email}
+                type="text"
+                name="email"
+                required
+              />
+            </div>
+
+            <div class="submit">
+              <button type="submit" required>
+                Submit
+              </button>
+            </div>
+
+            <div className=" back">
+              {" "}
+              <Link to="/chooseyear">
+                <button>Back</button>
+              </Link>
+            </div>
+
+            <div class="next">
+              {" "}
+              <Link to="/agreeform">
+                <button>Next</button>
+              </Link>{" "}
+            </div>
+          </div>
         </div>
-        <div class="header">
-          <h2>ပြည်ထောင်စုသမ္မတမြန်မာနိုင်ငံတော်</h2>
-          <h2>သိပ္ပံနှင့်နည်းပညာဦးစီးဌာန</h2>
-          <h2>အဆင့်မြင့်သိပ္ပံနှင့်နည်းပညာဦးစီးဌာန</h2>
-          <h2>နည်းပညာတက္ကသိုလ်(မိတ္ထီလာ)မြို့</h2>
-          <p>
-            ရက်စွဲ <Currentdate />
-          </p>
-          <h2>ကျောင်းသားမှတ်ပုံတင်အခြေပြုပုံစံ</h2>
-        </div>
-        <div className=" register-container">
-          <div className="form-group">
-            <label htmlfor="myanname">ကျောင်းသား/သူအမည်(မြန်မာလို)</label>
-            <input
-              onChange={handleMyanNameChange}
-              id="myanname"
-              value={myanname}
-              type="text"
-              name="myanname"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="engname">ကျောင်းသား/သူအမည်(အင်္ဂလိပ်လို)</label>
-            <input
-              onChange={handleEngNameChange}
-              id="engname"
-              value={engname}
-              type="text"
-              name="engname"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="nrc">နိုင်ငံသားစီစစ်‌ရေးအမှတ်</label>
-            <input
-              onChange={handleNrcChange}
-              id="nrc"
-              value={nrc}
-              type="text"
-              name="nrc"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>မွေးသက္ကရာဇ်</label>
-            <input
-              type="date"
-              name="birthDay"
-              value={birthDay}
-              onChange={handleBirthDayChange}
-              id="birthDay"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="nation">လူမျိုး/ကိုးကွယ်သည့်ဘာသာ</label>
-            <input
-              onChange={handleNationChange}
-              id="nation"
-              value={nation}
-              type="text"
-              name="nation"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="seatno">၁၀ တန်းအောင်မြင်သည့်ခုံအမှတ်/ခုနစ်</label>
-            <input
-              onChange={handleSeatNoChange}
-              id="seatno"
-              value={seatno}
-              type="text"
-              name="seatno"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="score">၁၀ တန်းအမှတ်ပေါင်း</label>
-            <input
-              onChange={handleScoreChange}
-              id="score"
-              value={score}
-              type="text"
-              name="score"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="passedseat_no">
-              (အောင်မြင်ခဲ့သည့်အတန်း-ခုံအမှတ်)
-            </label>
-            <input
-              onChange={handlePassedSeatNoChange}
-              id="passedseat_no"
-              value={passedseat_no}
-              type="text"
-              name="passedseat_no"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="currentseat_no">(ယခုသင်တန်း-ခုံအမှတ်)</label>
-            <input
-              onChange={handleCurrentSeatNoChange}
-              id="currentseat_no"
-              value={currentseat_no}
-              type="text"
-              name="currentseat_no"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="myanfathername">အဘအမည်(မြန်မာလို)</label>
-            <input
-              onChange={handleMyFatherNameChange}
-              id="myanfathername"
-              value={myanfathername}
-              type="text"
-              name="myanfathername"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="engfathername ">အဘအမည်(အင်္ဂလိပ်လို)</label>
-            <input
-              onChange={handleEngFatherNameChange}
-              id="engfathername"
-              value={engfathername}
-              type="text"
-              name="engfathername"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="fathernrc">အဘ၏နိုင်ငံသားစီစစ်ရေးအမှတ်</label>
-            <input
-              onChange={handleFatherNrcChange}
-              id="fathernrc"
-              value={fathernrc}
-              type="text"
-              name="fathernrc"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="fathernation">လူမျိုး/ကိုးကွယ်သည့်ဘာသာ</label>
-            <input
-              onChange={handleFatherNationChange}
-              id="fathernation"
-              value={fathernation}
-              type="text"
-              name="fathernation"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="fatherjob">အဘ၏အလုပ်အကိုင်</label>
-            <input
-              onChange={handleFatherJobChange}
-              id="fatherjob"
-              value={fatherjob}
-              type="text"
-              name="fatherjob"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="mothername">အမိအမည်</label>
-            <input
-              onChange={handleMotherNameChange}
-              id="mothername"
-              value={mothername}
-              type="text"
-              name="mothername"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="mothernrc">အမိ၏နိုင်ငံသားစီစစ်ရေးအမှတ်</label>
-            <input
-              onChange={handleMotherNrcChange}
-              id="mothernrc"
-              value={mothernrc}
-              type="text"
-              name="mothernrc"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="mothernation">လူမျိုး/ကိုးကွယ်သည့်ဘာသာ</label>
-            <input
-              onChange={handleMotherNationChange}
-              id="mothernation"
-              value={mothernation}
-              type="text"
-              name="mothernation"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="motherjob">အမိ၏အလုပ်အကိုင်</label>
-            <input
-              onChange={handleMotherJobChange}
-              id="motherjob"
-              value={motherjob}
-              type="text"
-              name="motherjob"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="address">
-              မိဘနေရပ်လိပ်စာအပြည့်အစုံ/ဖုန်းနံပါတ်
-            </label>
-            <input
-              onChange={handleAddressChange}
-              id="address"
-              value={address}
-              type="text"
-              name="address"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="phone_no">
-              လွယ်ကူစွာဆက်သွယ်နိုင်သည့်လိပ်စာ/ဖုန်းနံပါတ်
-            </label>
-            <input
-              onChange={handlePhoneNoChange}
-              id="phone_no"
-              value={phone_no}
-              type="text"
-              name="phone_no"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="student_no">
-              ကျောင်းသား/သူကျောင်း၀င်မှတ်ပုံတင်အမှတ်
-            </label>
-            <input
-              onChange={handleStudentNoChange}
-              id="student_no"
-              value={student_no}
-              type="text"
-              name="student_no"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlfor="email">Email</label>
-            <input
-              onChange={handleEmailChange}
-              id="email"
-              value={email}
-              type="text"
-              name="email"
-              required
-            />
-          </div>
-
-          <div class="submit">
-            <button type="submit" required>
-              Submit
-            </button>
-          </div>
-
-          <div className=" back">
-            {" "}
-            <Link to="/chooseyear">
-              <button>Back</button>
-            </Link>
-          </div>
-
-          <div class="next">
-            {" "}
-            <Link to="/agreeform">
-              <button>Next</button>
-            </Link>{" "}
-          </div>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 export default Fourthyear;

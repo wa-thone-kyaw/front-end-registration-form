@@ -19,6 +19,10 @@ import { Sixthyear } from "./component/Registerationform/Sixthyear";
 import { Agreeform } from "./component/Registerationform/Agreeform";
 import { Choosemajor } from "./component/Registerationform/Choosemajor";
 import { FillID } from "./component/Registerationform/FillID";
+import { ThirdyearStudent } from "./component/Civil/ThirdyearStudent";
+import { FourthyearStudent } from "./component/Civil/FourthyearStudent";
+import { FifthyearStudent } from "./component/Civil/FifthyearStudent";
+import { SixthyearStudent } from "./component/Civil/SixthyearStudent";
 
 import "./component/NavigationBar/NavigationBar.css";
 import "./component/NavigationBar/About.css";
@@ -32,6 +36,10 @@ import "./component/Registerationform/Overfirstyear.css";
 import "./component/Registerationform/Agreeform.css";
 import "./component/Dashboard/Dashboard.css";
 import "./component/Dashboard/SecondyearStudent.css";
+import "./component/Civil/ThirdyearStudent.css";
+import "./component/Civil/FourthyearStudent.css";
+import "./component/Civil/FifthyearStudent.css";
+import "./component/Civil/SixthyearStudent.css";
 import { AdminNavBar } from "./component/AdminNavBar/AdminNavBar";
 
 export default function MyApp() {
@@ -46,6 +54,13 @@ export default function MyApp() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/secondyearstudent" element={<SecondyearStudent />} />
+          <Route path="/thirdyearstudentcivil" element={<ThirdyearStudent />} />
+          <Route
+            path="/fourthyearstudentcivil"
+            element={<FourthyearStudent />}
+          />
+          <Route path="/fifthyearstudentcivil" element={<FifthyearStudent />} />
+          <Route path="/sixthyearstudentcivil" element={<SixthyearStudent />} />
           <Route path="/admchooseyears" element={<AdmChooseyears />} />
           <Route path="/about" element={<About />} />
           <Route path="/" element={<Home />} />

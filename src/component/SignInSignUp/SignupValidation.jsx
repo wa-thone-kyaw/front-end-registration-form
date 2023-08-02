@@ -1,7 +1,7 @@
 export const SignUpValidation = (values) => {
   let error = {};
   const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-z0-9]/;
+  const password_pattern = /^[a-zA-z0-9]/;
   if (values.name === "") {
     error.username = "Name should not be empty";
   } else {

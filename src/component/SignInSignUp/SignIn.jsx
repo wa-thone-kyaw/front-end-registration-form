@@ -2,9 +2,10 @@ import React, { useState } from "react";
 // import FacebookIcon from "@mui/icons-material/Facebook";
 // import GoogleIcon from "@mui/icons-material/Google";
 // import TwitterIcon from "@mui/icons-material/Twitter";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { database } from "./database";
 import "./SignIn.css";
+import { Redirect } from "react-router-dom";
 import { Card } from "./Card";
 import axios from "axios";
 import { AdminNavBar } from "../AdminNavBar/AdminNavBar";
@@ -12,6 +13,7 @@ export const SignIn = ({ setIsLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
+  const navigate = useNavigate();
 
   const errors = {
     username: "Invalid username",
@@ -23,24 +25,33 @@ export const SignIn = ({ setIsLoggedIn }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!username) {
+    /* if (!username) {
       setErrorMessages({ name: "noUsername", message: errors.noUsername });
       return;
     }
     if (!password) {
       setErrorMessages({ name: "noPassword", message: errors.noPassword });
       return;
-    }
+    } */
 
     axios
       .post("http://127.0.0.1:8000/student_registration/login", {
-        username,
-        password,
+        username: username,
+        password: password,
       })
       .then((response) => {
-        setIsLoggedIn(true);
+        if (response.data.username && response.data.token) {
+          setIsLoggedIn(true);
+          navigate("/dashboard");
+        } else {
+          setErrorMessages({
+            name: "login failed",
+            message: "invalid credentials",
+          });
+        }
       })
       .catch((error) => {
+        console.error("Error occured", error);
         setErrorMessages({
           name: "loginFailed",
           message: "Invalid credentials",
@@ -79,7 +90,7 @@ export const SignIn = ({ setIsLoggedIn }) => {
             Please Log in using your username and password!
           </p>
 
-          <form onSubmit={handleSubmit}>
+          <form onClick={handleSubmit}>
             <div className="signin">
               <input
                 type="text"
@@ -105,16 +116,13 @@ export const SignIn = ({ setIsLoggedIn }) => {
             </div>
             <br />
             <br />
+            <Link to="/dashboard">
+              {" "}
+              <button type="submit" name="signInBtn" className="sign_btn">
+                Sign In
+              </button>
+            </Link>
           </form>
-          <Link to="/dashboard">
-            {" "}
-            <input type="submit" value="Sign In" className="sign_btn" />
-          </Link>
-          {/* <div className="icons">
-          <GoogleIcon className="icon" />
-          <FacebookIcon className="icon" />
-          <TwitterIcon className="icon" />
-        </div> */}
         </Card>
       </div>
     </>
