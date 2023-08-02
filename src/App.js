@@ -46,7 +46,7 @@ export default function MyApp() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/secondyearstudent" element={<SecondyearStudent />} />
-          <Route path="/admchooseyear" element={<AdmChooseyears />} />
+          <Route path="/admchooseyears" element={<AdmChooseyears />} />
           <Route path="/about" element={<About />} />
           <Route path="/" element={<Home />} />
           <Route path="/chooseyear" element={<Chooseyear />} />
